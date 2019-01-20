@@ -1,11 +1,10 @@
-FROM andlaz/hadoop-base
-MAINTAINER andras.szerdahelyi@gmail.com
+FROM alpine
+MAINTAINER l.weinan@gmail.com
 
-RUN yum install -y zip unzip hostname patch
-
-# Install Maven
-ADD http://xenia.sote.hu/ftp/mirrors/www.apache.org/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz /root/
-RUN cd /root && tar xfv apache-maven-3.3.3-bin.tar.gz && rm apache-maven-3.3.3-bin.tar.gz
+# install dev tools
+RUN apk add curl which tar sudo rsync openssh zip unzip bash openjdk8 wget maven git tree
+# http://www.iops.cc/make-splunk-docker-w
+RUN apk add --update procps
 
 # Download Oozie sources
 ADD https://github.com/apache/oozie/archive/release-4.2.0.tar.gz /root/
@@ -24,8 +23,8 @@ RUN cd /root/oozie-release-4.2.0 \
 	&& rm -fR /root/apache-maven-3.3.3 \
 	&& rm -fR /root/.m2
 
-RUN mkdir -p /var/log/oozie && chown -R oozie /var/log/oozie
-RUN mkdir -p /var/lib/oozie/data && chown -R oozie /var/lib/oozie
+RUN mkdir -p /var/log/oozie
+RUN mkdir -p /var/lib/oozie/data
 RUN ln -s /var/log/oozie /opt/oozie-4.2.0/log
 RUN ln -s /var/lib/oozie/data /opt/oozie-4.2.0/data
 
@@ -37,4 +36,3 @@ RUN /opt/oozie-4.2.0/bin/oozie-setup.sh prepare-war
 EXPOSE 11000 11001
 
 ENV PATH $PATH:/opt/oozie-4.2.0/bin
-RUN chown -R oozie /opt/oozie-4.2.0
