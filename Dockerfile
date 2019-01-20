@@ -2,9 +2,11 @@ FROM alpine
 MAINTAINER l.weinan@gmail.com
 
 # install dev tools
-RUN apk add curl which tar sudo rsync openssh zip unzip bash openjdk8 wget maven git tree
+RUN apk --no-cache add curl which tar sudo rsync openssh zip unzip bash openjdk8 wget maven git tree
+# https://github.com/gliderlabs/docker-alpine/issues/397
+RUN apk --no-cache add busybox-extras
 # http://www.iops.cc/make-splunk-docker-w
-RUN apk add --update procps
+RUN apk --no-cache add --update procps
 
 # Download Oozie sources
 ADD https://github.com/apache/oozie/archive/release-4.2.0.tar.gz /root/
@@ -19,7 +21,7 @@ RUN mkdir -p /opt
 # Build Oozie. A single RUN because maven dependencies would inflate this layer to gigabytes
 RUN cd /root/oozie-release-4.2.0 \
    && export PATH=/root/apache-maven-3.3.3/bin:$PATH \
-   && mvn clean package assembly:single -DskipTests -P hadoop-2,uber -Dhadoop.version=2.7.1 \
+   && mvn -q clean package assembly:single -DskipTests -P hadoop-2,uber -Dhadoop.version=2.7.1 \
    && mv /root/oozie-release-4.2.0/distro/target/oozie-4.2.0-distro.tar.gz /opt/ && cd /opt && tar xfv oozie-4.2.0-distro.tar.gz && rm oozie-4.2.0-distro.tar.gz \
    && rm -fR /root/oozie-release-4.2.0 \
    && rm -fR /root/.m2
@@ -32,6 +34,9 @@ RUN ln -s /var/lib/oozie/data /opt/oozie-4.2.0/data
 RUN mkdir -p /opt/oozie-4.2.0/libext
 ADD http://archive.cloudera.com/gplextras/misc/ext-2.2.zip /opt/oozie-4.2.0/libext/
 RUN /opt/oozie-4.2.0/bin/oozie-setup.sh prepare-war
+
+COPY postrun.sh /
+CMD /postrun
 
 # Oozie web ports ( API; admin ui )
 EXPOSE 11000 11001
