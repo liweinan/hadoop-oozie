@@ -36,7 +36,7 @@ ADD http://archive.cloudera.com/gplextras/misc/ext-2.2.zip /opt/oozie-4.2.0/libe
 RUN /opt/oozie-4.2.0/bin/oozie-setup.sh prepare-war
 
 COPY postrun.sh /
-CMD /postrun
+CMD /postrun.sh
 
 # Oozie web ports ( API; admin ui )
 EXPOSE 11000 11001
