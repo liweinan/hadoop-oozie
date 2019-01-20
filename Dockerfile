@@ -36,6 +36,7 @@ ADD http://archive.cloudera.com/gplextras/misc/ext-2.2.zip /opt/oozie-4.2.0/libe
 RUN /opt/oozie-4.2.0/bin/oozie-setup.sh prepare-war
 
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /
+RUN chmod a+x /wait-for-it.sh
 COPY postrun.sh /
 CMD /postrun.sh
 
