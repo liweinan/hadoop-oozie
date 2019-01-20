@@ -5,4 +5,4 @@ oozied.sh start
 oozie admin -oozie http://localhost:11000/oozie -status
 ./wait-for-it.sh hadoop:54321 -- oozie-setup.sh sharelib create -fs hdfs://hadoop:9000
 
-/bin/bash
+tail -f /dev/null
