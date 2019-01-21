@@ -37,10 +37,16 @@ RUN /opt/oozie-4.2.0/bin/oozie-setup.sh prepare-war
 
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /
 RUN chmod a+x /wait-for-it.sh
+
 COPY postrun.sh /
-CMD /postrun.sh
+COPY workflow.properties /root
+COPY libpath.xml /tmp
+COPY core-site.xml /opt/oozie-4.2.0/conf/hadoop-conf
+
+CMD ["/postrun.sh"]
 
 # Oozie web ports ( API; admin ui )
 EXPOSE 11000 11001
 
 ENV PATH $PATH:/opt/oozie-4.2.0/bin
+ENV OOZIE_URL "http://localhost:11000/oozie"
