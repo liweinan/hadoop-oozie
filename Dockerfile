@@ -45,6 +45,10 @@ COPY core-site.xml /opt/oozie-4.2.0/conf/hadoop-conf
 
 RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 
+RUN cd /opt/oozie-4.2.0 && tar zxvf oozie-examples.tar.gz
+RUN sed -ie 's/nameNode=.*/nameNode=hdfs:\/\/hadoop:9000/' /opt/oozie-4.2.0/examples/apps/map-reduce/job.properties
+RUN sed -ie 's/jobTracker=.*/jobTracker=hadoop:8032/' /opt/oozie-4.2.0/examples/apps/map-reduce/job.properties
+
 CMD ["/postrun.sh"]
 
 RUN apk --no-cache add vim
