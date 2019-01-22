@@ -1,4 +1,3 @@
-
     <property>
         <name>oozie.service.WorkflowAppService.system.libpath</name>
         <value>/user/root/share/lib</value>
