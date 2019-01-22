@@ -2,7 +2,7 @@
 set -x
 
 sed -i '$ d' /opt/oozie-4.2.0/conf/oozie-site.xml
-cat /tmp/libpath.xml >> /opt/oozie-4.2.0/conf/oozie-site.xml
+cat /tmp/oozie-site.xml.fragment >> /opt/oozie-4.2.0/conf/oozie-site.xml
 echo '</configuration>' >> /opt/oozie-4.2.0/conf/oozie-site.xml
 
 oozied.sh start

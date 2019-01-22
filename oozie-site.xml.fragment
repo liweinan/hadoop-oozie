@@ -1,0 +1,13 @@
+
+    <property>
+        <name>oozie.service.WorkflowAppService.system.libpath</name>
+        <value>/user/root/share/lib</value>
+    </property>
+    <property>
+        <name>oozie.service.HadoopAccessorService.hadoop.configurations</name>
+        <value>*=/opt/hadoop/</value>
+    </property>
+    <property>       
+        <name>oozie.service.HadoopAccessorService.action.configurations</name>
+        <value>*=/opt/hadoop/</value>
+    </property>

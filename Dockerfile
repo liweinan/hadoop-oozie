@@ -40,10 +40,14 @@ RUN chmod a+x /wait-for-it.sh
 
 COPY postrun.sh /
 COPY workflow.properties /root
-COPY libpath.xml /tmp
+COPY oozie-site.xml.fragment /tmp
 COPY core-site.xml /opt/oozie-4.2.0/conf/hadoop-conf
 
+RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
+
 CMD ["/postrun.sh"]
+
+RUN apk --no-cache add vim
 
 # Oozie web ports ( API; admin ui )
 EXPOSE 11000 11001
