@@ -49,8 +49,8 @@ RUN cd /opt/oozie-4.2.0 && tar zxvf oozie-examples.tar.gz
 RUN sed -ie 's/nameNode=.*/nameNode=hdfs:\/\/hadoop:9000/' /opt/oozie-4.2.0/examples/apps/map-reduce/job.properties
 RUN sed -ie 's/jobTracker=.*/jobTracker=hadoop:8032/' /opt/oozie-4.2.0/examples/apps/map-reduce/job.properties
 
-COPY hadoop-conf.tgz /opt
-RUN cd /opt && tar zxvf hadoop-conf.tgz
+# COPY hadoop-conf.tgz /opt
+# RUN cd /opt && tar zxvf hadoop-conf.tgz
 
 CMD ["/postrun.sh"]
 
