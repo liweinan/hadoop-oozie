@@ -6,4 +6,4 @@
 
 https://github.com/liweinan/hadoop-docker
 
-参考上面的项目的`README`文档使用即可。
+参考上面的项目的[README.md](https://github.com/liweinan/hadoop-docker/blob/master/README.md)文档使用即可。
