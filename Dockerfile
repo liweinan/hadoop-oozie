@@ -18,10 +18,11 @@ RUN cd /root/oozie-release-4.2.0/webapp && patch pom.xml oozie-4.2.0-webapp-pom.
 
 RUN mkdir -p /opt
 
+ARG HADOOP_VER=2.7.2
 # Build Oozie. A single RUN because maven dependencies would inflate this layer to gigabytes
 RUN cd /root/oozie-release-4.2.0 \
    && export PATH=/root/apache-maven-3.3.3/bin:$PATH \
-   && mvn -q clean package assembly:single -DskipTests -P hadoop-2,uber -Dhadoop.version=2.7.1 \
+   && mvn -q clean package assembly:single -DskipTests -P hadoop-2,uber -Dhadoop.version=${HADOOP_VER} \
    && mv /root/oozie-release-4.2.0/distro/target/oozie-4.2.0-distro.tar.gz /opt/ && cd /opt && tar xfv oozie-4.2.0-distro.tar.gz && rm oozie-4.2.0-distro.tar.gz \
    && rm -fR /root/oozie-release-4.2.0 \
    && rm -fR /root/.m2
